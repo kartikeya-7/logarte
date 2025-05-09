@@ -193,11 +193,13 @@ class Logarte {
   void attach({
     required BuildContext context,
     required bool visible,
+    String? appBarTitle,
   }) async {
     if (visible) {
       return LogarteOverlay.attach(
         context: context,
         instance: this,
+        appBarTitle: appBarTitle,
       );
     }
   }

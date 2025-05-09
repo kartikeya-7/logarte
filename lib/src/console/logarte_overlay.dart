@@ -4,20 +4,23 @@ import 'package:logarte/src/console/logarte_auth_screen.dart';
 
 class LogarteOverlay extends StatelessWidget {
   final Logarte instance;
+  final String? appBarTitle;
 
   const LogarteOverlay._internal({
     required this.instance,
-    Key? key,
-  }) : super(key: key);
+    this.appBarTitle,
+  });
 
   static void attach({
     required BuildContext context,
     required Logarte instance,
+    String? appBarTitle,
   }) {
     final entry = OverlayEntry(
       builder: (context) {
         return LogarteOverlay._internal(
           instance: instance,
+          appBarTitle: appBarTitle,
         );
       },
     );
@@ -38,6 +41,7 @@ class LogarteOverlay extends StatelessWidget {
       bottom: height,
       child: _LogarteFAB(
         instance: instance,
+        appBarTitle: appBarTitle ?? 'Developer Console',
       ),
     );
   }
@@ -45,11 +49,12 @@ class LogarteOverlay extends StatelessWidget {
 
 class _LogarteFAB extends StatefulWidget {
   final Logarte instance;
+  final String appBarTitle;
 
   const _LogarteFAB({
-    Key? key,
     required this.instance,
-  }) : super(key: key);
+    required this.appBarTitle,
+  });
 
   @override
   _LogarteFABState createState() => _LogarteFABState();
@@ -57,6 +62,7 @@ class _LogarteFAB extends StatefulWidget {
 
 class _LogarteFABState extends State<_LogarteFAB> {
   bool _isOpened = false;
+  OverlayEntry? _logOverlay;
 
   @override
   void setState(VoidCallback fn) {
@@ -65,16 +71,41 @@ class _LogarteFABState extends State<_LogarteFAB> {
 
   Future<void> _onPressed() async {
     if (_isOpened) {
-      Navigator.of(context).pop();
+      _logOverlay?.remove();
+      _logOverlay = null;
     } else {
-      Navigator.of(context).push<void>(
-        MaterialPageRoute(
-          builder: (_) {
-            return LogarteAuthScreen(widget.instance);
-          },
-          settings: const RouteSettings(name: '/logarte_auth'),
+      _logOverlay = OverlayEntry(
+        builder: (context) => Material(
+          color: Colors.black87,
+          child: SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.black87,
+              appBar: AppBar(
+                backgroundColor: Colors.black87,
+                centerTitle: false,
+                automaticallyImplyLeading: false,
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.close, color: Colors.white),
+                    onPressed: () {
+                      _logOverlay?.remove();
+                      setState(() {
+                        _isOpened = false;
+                      });
+                    },
+                  ),
+                ],
+                title: Text(widget.appBarTitle,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(color: Colors.white)),
+              ),
+              body: LogarteAuthScreen(widget.instance),
+            ),
+          ),
         ),
       );
+
+      Overlay.of(context, rootOverlay: true).insert(_logOverlay!);
     }
 
     setState(() => _isOpened = !_isOpened);

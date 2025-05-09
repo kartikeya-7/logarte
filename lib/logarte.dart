@@ -1,3 +1,6 @@
+// Modified from Logarte (MIT License): https://pub.dev/packages/logarte
+// Original author: Muhammad Hassan (hassan@xyloup.dev)
+
 library logarte;
 
 export 'src/logarte.dart';

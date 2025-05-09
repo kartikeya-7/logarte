@@ -49,7 +49,8 @@ class _LogarteAuthScreenState extends State<LogarteAuthScreen> {
                   automaticallyImplyLeading: false,
                 ),
                 body: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: const EdgeInsets.only(
+                      left: 24.0, right: 24.0, top: 34.0, bottom: 24.0),
                   child: TextField(
                     autofocus: true,
                     controller: _controller,
