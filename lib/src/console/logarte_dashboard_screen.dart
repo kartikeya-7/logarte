@@ -6,10 +6,8 @@ import 'package:logarte/src/console/logarte_theme_wrapper.dart';
 class LogarteDashboardScreen extends StatefulWidget {
   final Logarte instance;
   final bool showBackButton;
-  const LogarteDashboardScreen(
-    this.instance, {
-    Key? key, this.showBackButton = false
-  }) : super(key: key);
+  const LogarteDashboardScreen(this.instance,
+      {super.key, this.showBackButton = false});
 
   @override
   State<LogarteDashboardScreen> createState() => _LogarteDashboardScreenState();
@@ -44,15 +42,23 @@ class _LogarteDashboardScreenState extends State<LogarteDashboardScreen> {
                   snap: true,
                   leading: widget.showBackButton ? const BackButton() : null,
                   automaticallyImplyLeading: false,
-                  title: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      filled: true,
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: _controller.clear,
+                  title: Padding(
+                    padding: EdgeInsets.only(
+                        left: 0.0, right: 0.0, top: 34.0, bottom: 24.0),
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        hintStyle:
+                            const TextStyle(color: Colors.grey, height: 1.0),
+                        filled: true,
+                        alignLabelWithHint: true,
+                        contentPadding: EdgeInsets.all(12.0),
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: _controller.clear,
+                        ),
                       ),
                     ),
                   ),

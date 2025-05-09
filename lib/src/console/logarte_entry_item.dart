@@ -320,12 +320,14 @@ class _LuxuryText extends StatelessWidget {
       ));
     }
 
-    return RichText(
-      text: TextSpan(
-        children: children,
-        style: const TextStyle(
-          fontSize: 14.0,
-          color: Colors.black,
+    return Expanded(
+      child: RichText(
+        text: TextSpan(
+          children: children,
+          style: const TextStyle(
+            fontSize: 14.0,
+            color: Colors.black,
+          ),
         ),
       ),
     );
