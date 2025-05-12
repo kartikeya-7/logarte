@@ -155,17 +155,7 @@ class _NetworkItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return NetworkLogEntryDetailsScreen(
-                entry,
-                instance: instance,
-              );
-            },
-            settings: const RouteSettings(name: '/logarte_entry_details'),
-          ),
-        );
+        entry.response.body.toString().copyToClipboard(context);
       },
       title: Row(
         children: [
